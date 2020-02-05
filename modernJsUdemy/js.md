@@ -165,6 +165,54 @@ var george = Object.create(proto);
 george.name = 'George';
 ```
 
+### Using Object.create()
+
+``` javascript
+const person = Object.create(personPrototypes, {
+  firstName = {value: 'Alp'},
+  lastName = {value: 'Ozen'}
+});
+// the resulting person object 
+```
+
+### ES6 classes
+Here's the syntax:
+
+``` javascript
+class Person{
+  constructor(firstName, lastName){
+    this.firstName = firstName;
+    this.lastName = lastName; 
+  }
+}
+```
+
+Note that any method added to a class gets added to the prototype. 
+
+### Subclasses 
+
+In a sense the new ES6 class syntax is very similar to Java:
+
+``` javascript
+class Animal{
+  constructor(feetNumber){
+    this.feetNumber = feetNumber
+  }
+}
+
+class Dog extends Animal{
+  constructor(barkSound, kind){
+    this.barkSound = barkSound;
+    this.kind = kind; 
+  }
+
+  static bark(){
+    return ' Dog is barking ${this.barkSound}'
+  }
+}
+
+
+
 
 
 
