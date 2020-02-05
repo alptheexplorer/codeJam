@@ -22,6 +22,29 @@ function UI(){
     }
 }
 
+UI.prototype.addCheck = function(){
+    const tr = document.createElement('tr');
+    const form = document.querySelector('#book-form');
+    tr.id = "checkForm";
+    const container = document.querySelector('.container');
+    const td1 = document.createElement('td');
+    const td2 = document.createElement('td');
+    td1.innerHTML = "Do you confirm entry"
+    const button1 = document.createElement('input');
+    const button2 = document.createElement('input');
+    button1.type = "button";
+    button1.value = "Yes";
+    button1.id = "yesButton";
+    button2.type = "button";
+    button2.value = "No";
+    button2.id = "noButton";
+    td2.appendChild(button1);
+    td2.appendChild(button2);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    container.insertBefore(tr,form)
+}
+
 UI.prototype.showAlert = function(message, className){
     const div = document.createElement('div');
     div.className = `alert ${className}`;
@@ -58,16 +81,25 @@ document.getElementById('book-form').addEventListener('submit', function(e){
     e.preventDefault();
     }
     else{
-        ui.addBookToList(book);
 
-        ui.showAlert('Book added', 'success');
-
+  ui.addCheck();
+    document.querySelector('#yesButton').addEventListener("click", function(){
+    
+    
+    ui.addBookToList(book);
+    ui.showAlert('Book added', 'success');
     ui.clearFields();
+   
+    window.setTimeout(function(){
+        document.querySelector('#checkForm').remove()
+    },1000);
     e.preventDefault();
-    }
+  })
 
-})
-  
-  
-  
-  
+  document.querySelector('#noButton').addEventListener("click", function(){
+    ui.showAlert("entry cancelled", "error");
+    window.setTimeout(function(){
+        document.querySelector('#checkForm').remove()
+    },1000);
+
+      })
