@@ -212,7 +212,63 @@ class Dog extends Animal{
 }
 
 
+```
 
+## Async JS, Ajax & Fetch API
+
+The reason for wanting to use async programming for web purposes is to prevent page refreshes for instance while requesting new data upon user click. This is facilitated through the XMLHttpRequest API. Here is how one would use `xhr` to asynchronously receive data from a text document. 
+
+``` javascript
+// we first add an event listener
+document.addEventListener("click", loadData);
+
+function loadData(){
+  const xhr = new XMLHttpRequest();
+
+  xhr.OPEN("GET", "data.txt", true);
+  xhr.onload = function(){
+    if(this.status === 200){
+      document.getElementById('output').innerHTML = `<h1> ${this.responseText} </h1>`
+    }
+  }
+}
+
+``` 
+
+Similarly, we can also fetch data from an external server as follows:
+
+``` javascript 
+document.querySelector('.get-jokes').addEventListener('click', getJokes);
+
+function getJokes(e) {
+  const number = document.querySelector('input[type="number"]').value;
+
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('GET', `http://api.icndb.com/jokes/random/${number}`, true);
+
+  xhr.onload = function() {
+    if(this.status === 200){
+      const response = JSON.parse(this.responseText);
+
+      let output = '';
+
+      if(response.type === 'success'){
+        response.value.forEach(function(joke){
+          output +=   `<li> ${joke.joke}</li>`
+        })
+      }else{
+        output += '<li> Something went wrong</li>';
+      }
+    }
+  }
+
+  xhr.send();
+
+  e.preventDefault();
+}
+
+```
 
 
 
